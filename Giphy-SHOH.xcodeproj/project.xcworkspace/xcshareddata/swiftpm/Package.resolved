@@ -1,0 +1,97 @@
+{
+  "object": {
+    "pins": [
+      {
+        "package": "Alamofire",
+        "repositoryURL": "https://github.com/Alamofire/Alamofire.git",
+        "state": {
+          "branch": null,
+          "revision": "eaf6e622dd41b07b251d8f01752eab31bc811493",
+          "version": "5.4.1"
+        }
+      },
+      {
+        "package": "Kingfisher",
+        "repositoryURL": "https://github.com/onevcat/Kingfisher.git",
+        "state": {
+          "branch": null,
+          "revision": "0be276f6a7fd54af4c3eb03f2d12e12d8c8a1a1d",
+          "version": "6.0.1"
+        }
+      },
+      {
+        "package": "Moya",
+        "repositoryURL": "https://github.com/Moya/Moya.git",
+        "state": {
+          "branch": null,
+          "revision": "b3e5a233e0d85fd4d69f561c80988590859c7dee",
+          "version": "14.0.0"
+        }
+      },
+      {
+        "package": "ReactiveSwift",
+        "repositoryURL": "https://github.com/Moya/ReactiveSwift.git",
+        "state": {
+          "branch": null,
+          "revision": "f195d82bb30e412e70446e2b4a77e1b514099e88",
+          "version": "6.1.0"
+        }
+      },
+      {
+        "package": "ReactorKit",
+        "repositoryURL": "https://github.com/ReactorKit/ReactorKit.git",
+        "state": {
+          "branch": null,
+          "revision": "fc392a1dc4c98a496089b8bd091cd92f608fd299",
+          "version": "2.1.1"
+        }
+      },
+      {
+        "package": "RxExpect",
+        "repositoryURL": "https://github.com/devxoul/RxExpect.git",
+        "state": {
+          "branch": null,
+          "revision": "c3a3bb3d46ee831582c6619ecc48cda1cdbff890",
+          "version": "2.0.0"
+        }
+      },
+      {
+        "package": "RxSwift",
+        "repositoryURL": "https://github.com/ReactiveX/RxSwift.git",
+        "state": {
+          "branch": null,
+          "revision": "002d325b0bdee94e7882e1114af5ff4fe1e96afa",
+          "version": "5.1.1"
+        }
+      },
+      {
+        "package": "SnapKit",
+        "repositoryURL": "https://github.com/SnapKit/SnapKit.git",
+        "state": {
+          "branch": null,
+          "revision": "d458564516e5676af9c70b4f4b2a9178294f1bc6",
+          "version": "5.0.1"
+        }
+      },
+      {
+        "package": "Then",
+        "repositoryURL": "https://github.com/devxoul/Then.git",
+        "state": {
+          "branch": null,
+          "revision": "e421a7b3440a271834337694e6050133a3958bc7",
+          "version": "2.7.0"
+        }
+      },
+      {
+        "package": "WeakMapTable",
+        "repositoryURL": "https://github.com/ReactorKit/WeakMapTable.git",
+        "state": {
+          "branch": null,
+          "revision": "9580560169b4b48ba2affe7badba6a7f360495f4",
+          "version": "1.2.0"
+        }
+      }
+    ]
+  },
+  "version": 1
+}

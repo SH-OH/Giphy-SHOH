@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="collection view cell content view" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Search-->
+        <scene sceneID="Nqd-Ql-nrs">
+            <objects>
+                <viewController storyboardIdentifier="SearchViewController" title="Search" id="EwI-AT-4ae" customClass="SearchViewController" customModule="Watcha_SHOH" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="qIA-4P-G0r">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="808"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="Y7S-aI-r3g" userLabel="1.Search SV">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="50"/>
+                                <subviews>
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Search GIPHY" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="ogM-Cb-jVv" customClass="CustomTextField" customModule="Watcha_SHOH" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="362" height="50"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="50" id="9gz-u5-S2Q"/>
+                                        </constraints>
+                                        <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <fontDescription key="fontDescription" type="system" weight="medium" pointSize="18"/>
+                                        <textInputTraits key="textInputTraits" autocorrectionType="no" keyboardAppearance="alert" returnKeyType="search" smartDashesType="no"/>
+                                    </textField>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ar9-dE-3rP">
+                                        <rect key="frame" x="364" y="0.0" width="50" height="50"/>
+                                        <color key="backgroundColor" red="1" green="0.21022044361888112" blue="0.71231356534090906" alpha="1" colorSpace="calibratedRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="50" id="2Nd-WW-172"/>
+                                        </constraints>
+                                        <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="3" maxY="0.0"/>
+                                        <state key="normal" image="magnifyingglass" catalog="system">
+                                            <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large" weight="semibold"/>
+                                        </state>
+                                    </button>
+                                </subviews>
+                            </stackView>
+                            <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" alignment="center" spacing="40" translatesAutoresizingMaskIntoConstraints="NO" id="cnh-xX-gif" userLabel="2. Type SV">
+                                <rect key="frame" x="0.0" y="55" width="414" height="50"/>
+                                <color key="backgroundColor" red="0.059267677370000001" green="0.061585754159999999" blue="0.070781610910000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="0du-7d-5gv"/>
+                                </constraints>
+                            </stackView>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="8xm-rd-jkk" customClass="ResultCollectionView" customModule="Watcha_SHOH" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="110" width="414" height="698"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="Yv0-HH-Q3H">
+                                    <size key="itemSize" width="128" height="128"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="" id="jt0-jf-JxL">
+                                        <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="dqN-i9-jdZ">
+                                            <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </collectionViewCellContentView>
+                                    </collectionViewCell>
+                                </cells>
+                            </collectionView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="gOW-Ne-3tS"/>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="8xm-rd-jkk" firstAttribute="trailing" secondItem="gOW-Ne-3tS" secondAttribute="trailing" id="3eM-eJ-c9k"/>
+                            <constraint firstItem="cnh-xX-gif" firstAttribute="trailing" secondItem="gOW-Ne-3tS" secondAttribute="trailing" id="GMz-yi-cyl"/>
+                            <constraint firstItem="cnh-xX-gif" firstAttribute="leading" secondItem="gOW-Ne-3tS" secondAttribute="leading" id="Lpf-lW-fuk"/>
+                            <constraint firstItem="8xm-rd-jkk" firstAttribute="top" secondItem="cnh-xX-gif" secondAttribute="bottom" constant="5" id="OQr-2w-SBE"/>
+                            <constraint firstItem="Y7S-aI-r3g" firstAttribute="leading" secondItem="gOW-Ne-3tS" secondAttribute="leading" id="dkC-CP-pMj"/>
+                            <constraint firstItem="Y7S-aI-r3g" firstAttribute="top" secondItem="gOW-Ne-3tS" secondAttribute="top" id="flJ-br-LhQ"/>
+                            <constraint firstItem="gOW-Ne-3tS" firstAttribute="trailing" secondItem="Y7S-aI-r3g" secondAttribute="trailing" id="gW9-gh-wZa"/>
+                            <constraint firstAttribute="bottom" secondItem="8xm-rd-jkk" secondAttribute="bottom" id="mFT-H6-iNR"/>
+                            <constraint firstItem="cnh-xX-gif" firstAttribute="top" secondItem="Y7S-aI-r3g" secondAttribute="bottom" constant="5" id="ryZ-JQ-i50"/>
+                            <constraint firstItem="8xm-rd-jkk" firstAttribute="leading" secondItem="gOW-Ne-3tS" secondAttribute="leading" id="zUF-Gj-ouD"/>
+                        </constraints>
+                    </view>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" barStyle="black" translucent="NO" prompted="NO"/>
+                    <connections>
+                        <outlet property="collectionView" destination="8xm-rd-jkk" id="g68-GK-2KZ"/>
+                        <outlet property="searchBtn" destination="Ar9-dE-3rP" id="5Bq-t9-DUN"/>
+                        <outlet property="searchTextField" destination="ogM-Cb-jVv" id="ivM-iN-BXz"/>
+                        <outlet property="searchTypeSV" destination="cnh-xX-gif" id="y02-D3-veL"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="OC3-As-7Wh" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-17" y="-333"/>
+        </scene>
+    </scenes>
+    <designables>
+        <designable name="ogM-Cb-jVv">
+            <size key="intrinsicContentSize" width="136" height="23"/>
+        </designable>
+    </designables>
+    <resources>
+        <image name="magnifyingglass" catalog="system" width="128" height="115"/>
+    </resources>
+</document>
