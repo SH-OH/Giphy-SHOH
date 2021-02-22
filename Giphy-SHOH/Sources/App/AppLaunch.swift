@@ -14,12 +14,14 @@ struct AppLaunch {
         
         let searchVC = SearchViewController.storyboard()
         let searchNC = BaseNavigationController(searchVC)
-        let searchReactor = SearchViewReactor(searchNC, useCase: useCase)
+        searchVC.navigation = searchNC
+        let searchReactor = SearchViewReactor(useCase)
         searchVC.reactor = searchReactor
         
         let favoritesVC = FavoritesViewController.storyboard()
         let favoritesNC = BaseNavigationController(favoritesVC)
-        let favoritesReactor = FavoritesViewReactor(favoritesNC, useCase: useCase)
+        favoritesVC.navigation = favoritesNC
+        let favoritesReactor = FavoritesViewReactor(useCase)
         favoritesVC.reactor = favoritesReactor
         
         let navigationControllers = [
@@ -27,12 +29,9 @@ struct AppLaunch {
             favoritesNC
         ]
         
-        let reactor = MainTabViewReactor(
-            navigationControllers: navigationControllers
-        )
-        
         let mainTabVC = MainTabViewController.storyboard()
-        mainTabVC.reactor = reactor
+        mainTabVC.navigationControllers = navigationControllers
+        mainTabVC.reactor = MainTabViewReactor()
         window.rootViewController = mainTabVC
         window.makeKeyAndVisible()
     }

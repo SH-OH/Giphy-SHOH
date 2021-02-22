@@ -21,16 +21,11 @@ final class MainTabViewReactor: Reactor {
     
     let initialState: State
     
-    let navigationControllers: [BaseNavigationController]
-    
-    init(
-        navigationControllers: [BaseNavigationController]
-    ) {
+    init() {
         self.initialState = .init(
             prevTabButton: .Search,
             curTabButton: .Search
         )
-        self.navigationControllers = navigationControllers
     }
     
     func mutate(action: Action) -> Observable<Action> {

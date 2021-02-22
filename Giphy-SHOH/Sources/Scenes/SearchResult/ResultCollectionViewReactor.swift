@@ -7,7 +7,6 @@
 
 import Foundation
 import ReactorKit
-import UIKit
 
 final class ResultCollectionViewReactor: Reactor {
     enum APICallType {
@@ -42,8 +41,6 @@ final class ResultCollectionViewReactor: Reactor {
     let searchReactor: SearchViewReactor
     let useCase: GiphyUseCase
     
-    var sizeCache: [String: CGSize]
-    
     init(_ searchReactor: SearchViewReactor) {
         let searchType = searchReactor.currentState.searchType.data
         self.initialState = .init(
@@ -53,7 +50,6 @@ final class ResultCollectionViewReactor: Reactor {
         )
         self.useCase = searchReactor.useCase
         self.searchReactor = searchReactor
-        self.sizeCache = [:]
     }
     
     func mutate(action: Action) -> Observable<Mutation> {

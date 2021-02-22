@@ -12,23 +12,27 @@ import RxCocoa
 
 final class ResultCollectionView: UICollectionView {
     
-    var disposeBag: DisposeBag = .init()
-    
     private enum Constants {
         static let EmptyText: String = "No GIFs Found"
     }
+    
+    var disposeBag: DisposeBag = .init()
+    
+    private var navigation: BaseNavigationController?
+    private var sizeCache: [String: CGSize] = [:]
     
     private var layout: ResultCollectionViewLayout? {
         return collectionViewLayout as? ResultCollectionViewLayout
     }
     
-    func setup() {
+    func setup(_ navigation: BaseNavigationController?) {
         register(ResultCell.self)
         collectionViewLayout = ResultCollectionViewLayout()
         if let layout = layout {
             layout.delegate = self
         }
         setupEmptyLabel()
+        self.navigation = navigation
     }
     
     private func setupEmptyLabel() {
@@ -45,15 +49,18 @@ final class ResultCollectionView: UICollectionView {
 
 extension ResultCollectionView: StoryboardView {
     func bind(reactor: ResultCollectionViewReactor) {
-        bindInputData(reactor)
+        guard let navigation = self.navigation else { return }
+        bindInputData(reactor,
+                      navigation: navigation)
         bindOutputData(reactor)
         bindDelegate(reactor)
     }
     
-    private func bindInputData(_ reactor: ResultCollectionViewReactor) {
+    private func bindInputData(_ reactor: ResultCollectionViewReactor,
+                               navigation: BaseNavigationController) {
         reactor.searchReactor.state
             .compactMap { $0.searchType }
-            .filter { $0.isCurrentVCIndex(reactor.searchReactor.getCurrentVCIndex()) }
+            .filter { $0.isCurrentVCIndex(navigation) }
             .distinctUntilChanged()
             .map { $0.data }
             .filter { _ in reactor.searchReactor.isSearchResult }
@@ -63,7 +70,7 @@ extension ResultCollectionView: StoryboardView {
         
         reactor.searchReactor.state
             .compactMap { $0.searchedKeyword }
-            .filter { $0.isCurrentVCIndex(reactor.searchReactor.getCurrentVCIndex()) }
+            .filter { $0.isCurrentVCIndex(navigation) }
             .distinctUntilChanged()
             .map { $0.data }
             .distinctUntilChanged()
@@ -178,7 +185,7 @@ extension ResultCollectionView: StoryboardView {
                     searchData: reactor.currentState.searchData,
                     selectIndex: indexPath.item
                 )
-                reactor.searchReactor.navigation.pushViewController(detail)
+                self?.navigation?.pushViewController(detail)
             }.disposed(by: disposeBag)
     }
 }
@@ -193,13 +200,13 @@ extension ResultCollectionView: CollectionViewCustomizable {
             return .zero
         }
         
-        if let size = reactor.sizeCache[item.id] {
+        if let size = sizeCache[item.id] {
             return size
         }
         
         let width: CGFloat = (collectionView.bounds.width - 6) / 2
         if let size = item.images[.fixedWidth]?.getSize(with: width) {
-            reactor.sizeCache.updateValue(size, forKey: item.id)
+            sizeCache.updateValue(size, forKey: item.id)
             return size
         }
         

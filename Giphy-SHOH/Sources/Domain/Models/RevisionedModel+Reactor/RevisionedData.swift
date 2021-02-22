@@ -41,7 +41,9 @@ extension RevisionedData {
         self.revision = self.revision+1
         self.data = data
     }
-    func isCurrentVCIndex(_ currentVCIndex: Int) -> Bool {
+    func isCurrentVCIndex(_ navigation: BaseNavigationController) -> Bool {
+        let index = navigation.viewControllers.count-1
+        let currentVCIndex = index >= 0 ? index : 0
         return self.vcIndex
             ==
             currentVCIndex

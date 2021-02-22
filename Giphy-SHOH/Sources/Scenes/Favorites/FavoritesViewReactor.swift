@@ -7,8 +7,7 @@
 
 import Foundation
 import ReactorKit
-import RxCocoa
-import UIKit
+import RxRelay
 
 final class FavoritesViewReactor: Reactor {
     enum Action {
@@ -29,20 +28,13 @@ final class FavoritesViewReactor: Reactor {
     }
     
     let initialState: State
-    let navigation: BaseNavigationController
     let useCase: GiphyUseCase
     
-    var sizeCache: [String: CGSize]
-    
-    init(_ navigation: BaseNavigationController,
-         useCase: GiphyUseCase) {
+    init(_ useCase: GiphyUseCase) {
         self.initialState = .init(
             favoritesData: []
         )
-        self.navigation = navigation
         self.useCase = useCase
-        
-        self.sizeCache = [:]
     }
     
     func mutate(action: Action) -> Observable<Mutation> {

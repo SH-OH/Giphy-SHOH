@@ -19,6 +19,10 @@ final class FavoritesViewController: BaseViewController {
         didSet { setupCollectionView() }
     }
     
+    var navigation: BaseNavigationController?
+    
+    private var sizeCache: [String: CGSize] = [:]
+    
     private func setupCollectionView() {
         collectionView.register(ResultCell.self)
         collectionView.collectionViewLayout = ResultCollectionViewLayout()
@@ -141,13 +145,13 @@ extension FavoritesViewController: StoryboardView {
             .filter { !$0.1 }
             .map { $0.0.0 }
             .observeOn(MainScheduler.instance)
-            .bind { (indexPath) in
+            .bind { [weak self] (indexPath) in
                 let detail = DetailViewController.storyboard()
                 detail.reactor = DetailViewReactor(
                     searchData: reactor.currentState.favoritesData,
                     selectIndex: indexPath.item
                 )
-                reactor.navigation.pushViewController(detail)
+                self?.navigation?.pushViewController(detail)
             }.disposed(by: disposeBag)
         
     }
@@ -163,13 +167,13 @@ extension FavoritesViewController: CollectionViewCustomizable {
             return .zero
         }
         
-        if let size = reactor.sizeCache[item.id] {
+        if let size = sizeCache[item.id] {
             return size
         }
         
         let width: CGFloat = (collectionView.bounds.width - 6) / 2
         if let size = item.images[.fixedWidth]?.getSize(with: width) {
-            reactor.sizeCache.updateValue(size, forKey: item.id)
+            sizeCache.updateValue(size, forKey: item.id)
             return size
         }
         

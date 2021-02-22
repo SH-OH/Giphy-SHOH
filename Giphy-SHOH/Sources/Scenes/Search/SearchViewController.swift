@@ -25,6 +25,8 @@ final class SearchViewController: BaseViewController {
     
     @IBOutlet private weak var collectionView: ResultCollectionView!
     
+    var navigation: BaseNavigationController?
+    
     private var trendingVC: TrendingViewController?
     private let autoCompleteVC = AutoCompleteViewController.storyboard()
     
@@ -71,19 +73,26 @@ final class SearchViewController: BaseViewController {
 extension SearchViewController: StoryboardView {
     
     func bind(reactor: SearchViewReactor) {
-        bindKeyboard(reactor)
-        bindTitle(reactor)
+        guard let navigation = self.navigation else { return }
+        
+        bindKeyboard(reactor,
+                     navigation: navigation)
+        bindTitle(reactor,
+                  navigation: navigation)
         bindTextField(reactor)
-        bindTypeButtons(reactor)
-        bindNavigation(reactor)
+        bindTypeButtons(reactor,
+                        navigation: navigation)
+        bindNavigation(reactor,
+                       navigation: navigation)
     }
     
-    private func bindNavigation(_ reactor:  SearchViewReactor) {
+    private func bindNavigation(_ reactor:  SearchViewReactor,
+                                navigation: BaseNavigationController) {
         rx.sentMessage(#selector(UIViewController.viewWillAppear(_:)))
             .map { _ in !reactor.isSearchResult }
             .filter { $0 }
             .asDriverOnEmpty()
-            .drive(reactor.navigation.rx.hiddenBarButton)
+            .drive(navigation.rx.hiddenBarButton)
             .disposed(by: disposeBag)
         
         reactor.pushControlRelay
@@ -92,7 +101,8 @@ extension SearchViewController: StoryboardView {
             .disposed(by: disposeBag)
     }
     
-    private func bindKeyboard(_ reactor: SearchViewReactor) {
+    private func bindKeyboard(_ reactor: SearchViewReactor,
+                              navigation: BaseNavigationController) {
         Observable.merge(
             sharedShowKeyboard
                 .map { _ in false },
@@ -103,13 +113,14 @@ extension SearchViewController: StoryboardView {
         .filter { _ in !reactor.isSearchResult }
         .distinctUntilChanged()
         .asDriverOnEmpty()
-        .drive(reactor.navigation.rx.hiddenBarButton)
+        .drive(navigation.rx.hiddenBarButton)
         .disposed(by: disposeBag)
     }
     
-    private func bindTitle(_ reactor: SearchViewReactor) {
+    private func bindTitle(_ reactor: SearchViewReactor,
+                           navigation: BaseNavigationController) {
         reactor.state.map { $0.searchedKeyword }
-            .filter { $0.isCurrentVCIndex(reactor.getCurrentVCIndex()) }
+            .filter { $0.isCurrentVCIndex(navigation) }
             .map { $0.data }
             .distinctUntilChanged()
             .filter { _ in reactor.isSearchResult }
@@ -143,7 +154,8 @@ extension SearchViewController: StoryboardView {
         .disposed(by: disposeBag)
     }
     
-    private func bindTypeButtons(_ reactor: SearchViewReactor) {
+    private func bindTypeButtons(_ reactor: SearchViewReactor,
+                                 navigation: BaseNavigationController) {
         let buttons = makeAndSetupTypeButtons(reactor,
                                               sv: searchTypeSV)
         Observable.merge(buttons)
@@ -154,7 +166,7 @@ extension SearchViewController: StoryboardView {
         
         reactor.state
             .compactMap { $0.searchType }
-            .filter { $0.isCurrentVCIndex(reactor.getCurrentVCIndex()) }
+            .filter { $0.isCurrentVCIndex(navigation) }
             .map { $0.data }
             .observeOn(MainScheduler.instance)
             .bind(onNext: { [weak self] in self?.didClickSearchType($0) })
@@ -203,7 +215,7 @@ extension SearchViewController {
               reactor.isSearchResult else { return }
         
         let resultCVReactor = ResultCollectionViewReactor(reactor)
-        collectionView.setup()
+        collectionView.setup(navigation)
         collectionView.reactor = resultCVReactor
         
         searchTextField.text = reactor.currentState.searchedKeyword.data
@@ -307,7 +319,7 @@ extension SearchViewController {
         let completion: () -> () = {
             searchResultVC.reactor?.action.onNext(.enterSearchKeyword(keyword))
         }
-        reactor.navigation.pushViewController(
+        navigation?.pushViewController(
             searchResultVC,
             completion: completion
         )

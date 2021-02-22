@@ -16,8 +16,8 @@ enum TabButtonType: Int, CaseIterable {
         return self.rawValue-1
     }
     
-    func navigation(_ reactor: MainTabViewReactor) -> BaseNavigationController {
-        return reactor.navigationControllers[self.scrollIndex]
+    func navigation(_ navigationControllers: [BaseNavigationController]) -> BaseNavigationController {
+        return navigationControllers[self.scrollIndex]
     }
     
 }

@@ -7,7 +7,7 @@
 
 import Foundation
 import ReactorKit
-import RxCocoa
+import RxRelay
 
 final class SearchViewReactor: Reactor {
     
@@ -30,7 +30,6 @@ final class SearchViewReactor: Reactor {
     }
     
     let initialState: State
-    let navigation: BaseNavigationController
     let useCase: GiphyUseCase
     
     let viewControllerIndex: UInt
@@ -40,14 +39,12 @@ final class SearchViewReactor: Reactor {
     
     // MARK: - Default First Search VC init
     
-    init(_ navigationController: BaseNavigationController,
-         useCase: GiphyUseCase) {
+    init(_ useCase: GiphyUseCase) {
         self.initialState = .init(
             searchType: .init(data: .GIFs),
             curKeyword: .init(data: nil),
             searchedKeyword: .init(data: "")
         )
-        self.navigation = navigationController
         self.useCase = useCase
         
         self.viewControllerIndex = 0
@@ -68,7 +65,6 @@ final class SearchViewReactor: Reactor {
             searchedKeyword: .init(vcIndex: vcIndex, data: searchKeyword)
         )
         self.useCase = reactor.useCase
-        self.navigation = reactor.navigation
         
         self.viewControllerIndex = vcIndex
         self.isSearchResult = true
@@ -99,14 +95,5 @@ final class SearchViewReactor: Reactor {
             newState.searchedKeyword.update(data: keyword)
             return newState
         }
-    }
-}
-
-// MARK: - For Filter
-
-extension SearchViewReactor {
-    func getCurrentVCIndex() -> Int {
-        let index = navigation.viewControllers.count-1
-        return index >= 0 ? index : 0
     }
 }

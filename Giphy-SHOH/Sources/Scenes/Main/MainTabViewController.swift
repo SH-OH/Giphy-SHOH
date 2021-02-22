@@ -16,6 +16,8 @@ final class MainTabViewController: BaseViewController {
     @IBOutlet private weak var viewControllersSV: UIStackView!
     @IBOutlet private weak var tabBarSV: UIStackView!
     
+    var navigationControllers: [BaseNavigationController]?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupViewControllers(viewControllersSV)
@@ -23,8 +25,7 @@ final class MainTabViewController: BaseViewController {
     }
     
     private func setupViewControllers(_ vcsSV: UIStackView) {
-        guard let reactor = self.reactor else { return }
-        reactor.navigationControllers
+        navigationControllers?
             .enumerated().forEach { (index, nc) in
                 guard let _view = vcsSV.arrangedSubviews[safe: index] else { return }
                 nc.willMove(toParent: self)
@@ -92,8 +93,9 @@ extension MainTabViewController: StoryboardView {
         sharedDidTapTabButton
             .filter { $0.0 == $0.1 }
             .observeOn(MainScheduler.instance)
-            .bind { (prev, cur) in
-                let navigation = cur.navigation(reactor)
+            .bind { [weak self] (prev, cur) in
+                guard let navigationControllers = self?.navigationControllers else { return }
+                let navigation = cur.navigation(navigationControllers)
                 if let favVC = navigation.topViewController as? FavoritesViewController {
                     favVC.didTapTabButton()
                 }
